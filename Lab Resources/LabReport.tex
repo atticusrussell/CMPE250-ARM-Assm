@@ -1,0 +1,225 @@
+%***********************************************************************
+% Lab Report Template
+% R. W. Melton
+% May 19, 2019
+% August 24, 2020
+%***********************************************************************
+%Modify the following macros to set document property values
+%used for cover sheet (title page) and page header
+\newcommand{\CourseNumber}{CMPE-250}
+\newcommand{\CourseName}{Assembly and Embedded Programming}
+\newcommand{\SemesterName}{Fall 2020}
+\newcommand{\SemesterCode}{20201}
+\newcommand{\LabExNum}{<Number>}
+\newcommand{\LabExTitle}{<Title>}
+\newcommand{\StudentName}{<Student Name>}
+\newcommand{\DateSubmit}{<Date>}
+\newcommand{\LabSection}{<Number>}
+\newcommand{\LabInstructor}{<Name>}
+\newcommand{\TAa}{<Name>}
+\newcommand{\TAb}{<Name>}
+\newcommand{\TAc}{<Name>}
+\newcommand{\LectureSection}{<Number>}
+\newcommand{\LectureInstructor}{<Name>}
+%End macros for document property values
+%***********************************************************************
+\title{Lab Ex. \LabExNum\ Report}
+\author{\StudentName}
+\date{\DateSubmit}
+\makeatletter %make \title, \author, and \date availabile with \@
+\newcommand{\FontSize}{12}
+\newcommand{\FontUnit}{pt}
+\newcommand{\HeadSize}{\dimexpr \FontSize\FontUnit + 2pt \relax}
+\documentclass[\FontSize\FontUnit,letterpaper,oneside]{article}
+\usepackage[twoside=false,margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[USenglish]{babel}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\usepackage{newtxtext, newtxmath}
+%If newtx package had to be installed in multiuser environment
+%regular user may have to run updmap command to avoid following error
+%FATAL:  ``PK font ts1-qtmr could not be created.'' in miktex-makepk
+%Alternatively, uncomment the following line
+%\pdfmapfile{=pdftex35.map
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{nameref}
+\usepackage[pdfborder={0 0 0},plainpages=false,pdfpagelabels]{hyperref}
+%If hyperref generates errors on first build, rebuild.            
+\hypersetup{pdfauthor={\@author},
+            pdftitle={\@title},
+            pdfsubject={\CourseNumber\ \SemesterCode},
+            %pdfkeywords={},
+            %pdfproducer={Latex with hyperref, or other system},
+            %pdfcreator={pdflatex, or other tool}
+            urlcolor=none}
+\setlength{\topsep}{\z@}
+\setlength{\partopsep}{\z@}
+\setlength{\itemsep}{\z@}
+\setlength{\parindent}{\z@}
+\setlength{\parskip}{\FontSize\FontUnit plus 2pt minus 1pt}
+\setlength{\baselineskip}{\dimexpr \FontSize\FontUnit + 2pt \relax}
+\renewcommand \baselinestretch{1}
+\makeatletter
+  \renewcommand \section{
+    \@startsection{section}{1}{\z@}
+      %Before 2 lines, accounting for normal \parskip
+      {\dimexpr \FontSize\FontUnit * 2 - \parskip \relax plus 0pt minus 0pt}
+      %After 1 line, accounting for normal \parskip
+      {0.1pt plus 2pt minus 1pt} %nonzero amount to get normal \parskip
+      {\normalfont\normalsize\bfseries}} 
+  \renewcommand \subsection{
+    \@startsection{paragraph}{2}{\z@}
+      %Before 1 lines, accounting for normal \parskip
+      {0.1pt plus 2pt minus 1pt}
+      %After 0.5 em on same line as heading
+      {-0.5em} 
+      {\normalfont\normalsize\bfseries}} 
+  \renewcommand \subsubsection{
+    \@startsection{paragraph}{3}{\z@}
+      %Before 1 line, accounting for normal \parskip
+      {0.1pt plus 2pt minus 1pt}
+      %After 0.5 em on same line as heading
+      {-0.5em} 
+      {\normalfont\normalsize\uline}} 
+  \renewcommand \paragraph{
+      \@startsection{paragraph}{4}{\z@}
+      %Before 1 line, accounting for normal \parskip
+      {0.1pt plus 2pt minus 1pt}
+      %After 0.5 em on same line as heading
+      {-0.5em} 
+      {\normalfont\normalsize}} 
+\makeatother
+\pagenumbering{arabic}
+\headheight=\HeadSize
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\makeatletter %make \title, \author, and \date availabile with \@
+\pagestyle{fancy}
+\fancyhead{} %clear all header fields
+\fancyhead[L]{\small \CourseNumber\ \SemesterCode \@author:  \@title}
+\fancyhead[R]{\small Page \thepage\ of \pageref*{LastPage}}
+\fancyfoot{} %clear all footer fields
+\fancypagestyle{plain}{
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+  \fancyhf{} %clear header and footer fields
+  \fancyfoot[C]{\small \CourseNumber\ \SemesterCode\ \@author:  \@title:  
+    Page \thepage\ of \pageref*{LastPage}}
+}
+%May require second build to get correct page numbers.            
+\begin{document}
+\raggedbottom
+\widowpenalties 1 10000
+\lefthyphenmin=4
+\righthyphenmin=4
+\setlist{nolistsep}
+%***********************************************************************
+%Title page is automatically generated from macros at top of file
+\pagenumbering{roman}
+\begin{titlepage}
+  %No space before paragraph at top of page
+  %\vspace{\dimexpr-2\parsep-2\parskip\relax}
+  %1.5 in before center (list) at top of page
+  \vspace*{\dimexpr 1.5in - \topsep - \partopsep - \topskip - \parskip \relax}
+  \begin{center}
+    \textbf{\large\CourseNumber\ \CourseName\linebreak
+      \linebreak
+      Laboratory Exercise \LabExNum\linebreak
+      \linebreak
+      \LabExTitle}
+  \end{center}
+  \vspace*{\dimexpr 1.5in - \topsep - \partopsep - \topskip \relax}
+  \par By submitting this report, I attest that its contents are wholly 
+    my individual writing about this exercise and that they reflect 
+    the submitted code.  I further acknowledge that permitted 
+    collaboration for this exercise consists only of discussions of 
+    concepts with course staff and fellow students.  Other than code 
+    provided by the instructor for this exercise, all code was 
+    developed by me.
+  \null
+  \vspace*{4\parskip}
+  \hspace*{3.25in}\begin{tabular}[t]
+    {@{\hskip0pt}r    %Specification
+     @{\hskip1em}l    %Value
+     @{\hskip0pt}}
+    \toprule[1pt]
+    \multicolumn{2}{l}{\StudentName}\\
+    \multicolumn{2}{l}{\DateSubmit}\\
+    \\
+    Lab Section:&\LabSection\\
+    Instructor:&\LabInstructor\\
+    TA:&\TAa\\
+    &\TAb\\
+    &\TAc\\
+    \\
+    Lecture Section:&\LectureSection\\
+    Lecture Instructor:&\LectureInstructor
+  \end{tabular}
+\end{titlepage}
+\pagenumbering{arabic}
+\thispagestyle{plain}
+%***********************************************************************
+%Report body begins here
+\section*{Abstract}
+  [\textit{Verify in the ``Lab Report'' section of the lab assignment 
+    whether this section is required for this exercise.}]
+\par The abstract presents the reader of the report with a brief overview of 
+  the lab exercise.  By reading the abstract the reader should know what 
+  the rest of the report entails---not only what was done, how it was 
+  done, and the results, but also the concepts that were explored in the 
+  exercise, (e.g., emulator environment, arithmetic instructions, etc.).  
+  Note that the abstract is not simply a copy of the objective(s) from 
+  the lab assignment.  The abstract must begin by establishing the scope 
+  of the exercise and expressing its purpose in the writer’s own words.  
+  It then very briefly summarizes the lab procedure and concludes with a 
+  summary of the results.  Thus, the abstract is a succinct yet complete 
+  summary of the report.
+\section*{Design Methodology}
+[\textit{Verify in the ``Lab Report'' section of the lab assignment 
+  whether this section is required for this exercise.}]
+\par The design methodology presents much of the theory behind the lab 
+  exercise, which was incorporated in the program.  Figures, equations, 
+  and tables are often very effective in this presentation.  Any figures 
+  or tables should be integrated within the report and must be properly 
+  labeled, referenced, and explained in text, (e.g., ``the final design 
+  of the timer game is depicted in Figure 5'').  The design methodology 
+  should stand on its own objective technical merit without any 
+  reference to class or lab, (e.g., not any of the following:  
+  ``\sout{the design methodology was based on the lab assignment},''
+  ``\sout{the specifications given by the instructor were followed},'' 
+  etc.).
+\section*{Procedure}
+[\textit{Verify in the ``Lab Report'' section of the lab assignment 
+  whether this section is required for this exercise.}]
+\par The procedure tells what was done and how it was done in a 
+  chronological, narrative style--in contrast to a lab assignment’s 
+  procedure section, which is typically written in imperative style, 
+  (i.e., list of instructions).  The report’s procedure should tell in 
+  the writer’s own words what was actually done in lab.  From reading 
+  the procedure, the reader should be able to perform the exercise to 
+  get the same results as the writer presents.
+\section*{Results}
+[\textit{Verify in the ``Lab Report'' section of the lab assignment 
+  whether this section is required for this exercise.}]
+\par The results section provides the reader with all results that came from 
+  completing the lab exercise, (e.g., any register values or memory 
+  contents that were generated).  For most exercises, the results can be 
+  incorporated in a figure from a screen capture or from a log file.  
+  As in the rest of the report, every figure, table, etc. must be 
+  properly labeled, introduced, and discussed in text.
+\section*{Conclusion}
+[\textit{Verify in the ``Lab Report'' section of the lab assignment 
+  whether this section is required for this exercise.}]
+\par The conclusion section provides the reader with insights that came from 
+  completing the lab exercise.  It describes the lessons learned in the 
+  exercise and analyzes the results.  It also notes and explains any 
+  deviations from the assigned procedure.  It concludes by describing 
+  general concepts applied to achieve the results and by making 
+  statements that extend beyond the scope of the exercise to the general 
+  case, (e.g., where the concepts or results could be applied outside of 
+  the lab exercise).
+\label{LastPage}
+\end{document}

@@ -1,0 +1,598 @@
+            TTL Lab Exercise Seven Circular FIFO Queue operations
+;****************************************************************
+;Descriptive comment header goes here.
+;(What does the program do?)
+;Name:  <Atticus Russell>
+;Date:  <3/11/2021>
+;Class:  CMPE-250
+;Section:  <Section 01L1, Thursday, 2:00-3:55>
+;---------------------------------------------------------------
+;Keil Template for KL05
+;R. W. Melton
+;September 13, 2020
+;****************************************************************
+;Assembler directives
+            THUMB
+            OPT    64  ;Turn on listing macro expansions
+;****************************************************************
+;Include files
+            GET  MKL05Z4.s     ;Included by start.s
+            OPT  1   ;Turn on listing
+;****************************************************************
+;EQUates
+; Queue management record field offsets
+IN_PTR      EQU   0
+OUT_PTR     EQU   4
+BUF_STRT    EQU   8
+BUF_PAST    EQU   12
+BUF_SIZE    EQU   16
+NUM_ENQD    EQU   17
+; Queue structure sizes
+Q_BUF_SZ    EQU   4   ;Queue contents
+Q_REC_SZ    EQU   18  ;Queue management record
+;****************************************************************
+;Program
+;Linker requires Reset_Handler
+            AREA    MyCode,CODE,READONLY
+            ENTRY
+            EXPORT  Reset_Handler
+            IMPORT  Startup
+Reset_Handler  PROC  {}
+main
+;---------------------------------------------------------------
+;Mask interrupts
+            CPSID   I
+;KL05 system startup with 48-MHz system clock
+            BL      Startup
+;---------------------------------------------------------------
+;>>>>> begin main program code <<<<<
+;>>>>>   end main program code <<<<<
+;Stay here
+            B       .
+            ENDP
+;>>>>> begin subroutine code <<<<<
+Dequeue		PROC	{R0-R14}
+;****************************************************************
+;Description:
+;	Attempts to get a character from the queue whose record structure’s
+;	address is in R1: if the queue is not empty, dequeues a single character
+;	from the queue to R0, and returns with the PSR C bit cleared, (i.e., 0),
+;	to report dequeue success, otherwise, returns with the PSR C bit set, 
+;	(i.e., 1), to report dequeue failure.
+;Input Parameter: none
+;Output Parameter: 
+;	R0: character dequeued (unsigned byte ASCII code)
+;	R1: queue record structure (unsigned word address)
+;	C: dequeue operation status: 0 success; 1 failure (PSR bit flag)
+;modified registers:
+;	no registers other than PSR and any output parameters) have changed values
+;	after return
+;****************************************************************
+			PUSH	{R0-R6}
+
+			POP		{R0-R6}
+
+			BX		LR
+			ENDP	
+				
+Enqueue		PROC	{R0-R14}
+;****************************************************************
+;Description:
+;	Attempts to put a character in the queue whose queue record structure’s
+;	address is in R1: if the queue is not full, enqueues the single character 
+;	from R0 to the queue, and returns with the PSR C bit cleared to report 
+;	enqueue success, otherwise, returns with the PSR C bit set to report 
+;	enqueue failure.
+;Input Parameter: 
+;	R0: character to enqueue (unsigned byte ASCII code)
+;~~	R1: queue record structure (unsigned word address)
+;Output Parameter: 
+;	R1: queue record structure (unsigned word address)
+;	C: enqueue operation status: 0 success; 1 failure (PSR bit flag)
+;modified registers:
+;	no registers other than PSR and any output parameters) have changed values
+;	after return
+;****************************************************************
+			PUSH	{R0-R6}
+			LDRB	R2,[R1,#NUM_ENQD]
+			LDRB	R3,[R1,#BUF_SIZE]
+			CMP		R2,R3
+			BGE		queueFull
+			LDR		R4,[R1,#IN_PTR]
+			STRB	R0,[R4,#0]		;store new element at location pointed by 
+									;inpointer
+			ADDS	R2,R2,#1		;increment num_enqued
+			STRB	R2,[R1,#NUM_ENQD];store updated value
+			ADDS	R4,R4,#1		;increment inpointer past new item
+			STR		R4,[R1,#IN_PTR];store updated valueof inpointer
+			LDRB	R5,[R1,#BUF_PAST]
+			CMP		R4,R5
+			BLO		nextStep
+			;otherwise set inptr to start queue buffer
+			LDRB	R6,[R1,#BUG]
+			
+			
+
+nextStep
+			STR		R4,[R1,#IN_PTR];store updated valueof inpointer
+			
+			B		clearC
+queueFull	;set c flag and end
+			PUSH	{R0,R1}	;push input parameters to stack
+			MRS		R0,APSR
+			MOVS	R1,#0x20
+			LSLS	R1,R1,#24
+			ORRS	R0,R0,R1
+			MSR		APSR,R0
+			POP		{R0,R1} ;restore input parameters from stack
+			B		endImmediate
+clearC
+			PUSH	{R2-R3}
+			MRS		R2,APSR
+			MOVS	R3,#0x20
+			LSLS	R3,R3,#24
+			BICS	R2,R2,R3
+			MSR		APSR,R2
+			POP		{R2-R3}
+endImmediate
+			POP		{R0-R6}
+			BX		LR
+			ENDP	
+				
+				
+				
+InitQueue	PROC	{R0-R14}
+;****************************************************************
+;Description:
+;	Initializes the queue record structure at the address in R1 for the empty
+;	queue buffer at the address in R0 of size given in R2, (i.e., character 
+;	capacity).
+;Input Parameter: 
+;	R0: queue buffer (unsigned word address)
+;	R1: queue record structure (unsigned word address)
+;	R2: queue capacity in bytes (unsigned byte value)
+;Output Parameter: none
+;modified registers:
+;	no registers other than PSR and any output parameters) have changed values
+;	after return
+;****************************************************************
+			PUSH	{R0-R2}
+			//LDR   R0,=QBuffer 
+			//LDR   R1,=QRecord 
+			STR   R0,[R1,#IN_PTR] 
+			STR   R0,[R1,#OUT_PTR] 
+			STR   R0,[R1,#BUF_STRT] 
+			//MOVS  R2,#Q_BUF_SZ 
+			ADDS  R0,R0,R2 
+			STR   R0,[R1,#BUF_PAST] 
+			STRB  R2,[R1,#BUF_SIZE] 
+			MOVS  R0,#0 
+			STRB  R0,[R1,#NUM_ENQD] 
+
+			POP		{R0-R2}
+			BX		LR
+			ENDP	
+				
+				
+				
+PutNumHex	PROC	{R0-R14}
+;****************************************************************
+;Description:
+;	Prints to the terminal screen the text hexadecimal representation of the
+;	unsigned word value in R0. (For example, if R0 contains 0x000012FF, then 
+;	000012FF should print on the terminal. Note: 12FF would not be acceptable. 
+;	Do not use division to determine the hexadecimal digit values—use bit masks 
+;	and shifts.)
+;Input Parameter: 
+;	R0: number to print in hexadecimal (unsigned word value)
+;Output Parameter: none
+;modified registers:
+;	no registers other than PSR and any output parameters) have changed values
+;	after return
+;****************************************************************
+			PUSH	{R0-R6}
+
+			POP		{R0-R6}
+
+			BX		LR
+			ENDP	
+				
+				
+				
+PutNumUB	PROC	{R0-R14}
+;****************************************************************
+;Description:
+;	Prints to the terminal screen the text decimal representation of the
+;	unsigned byte value in R0. (For example, if R0 contains 0x003021101, 
+;	then 1 should print on the terminal. Note: 001 would also be acceptable, 
+;	as the text decimal representation of 0x01.) (Hint: use a mask to preserve 
+;	only the least byte of the word in R0, and call your PutNumU subroutine
+;	from Lab Exercise Six.)
+;Input Parameter: 
+;	R0: number to print in decimal (unsigned byte value)
+;Output Parameter: none
+;modified registers:
+;	no registers other than PSR and any output parameters) have changed values
+;	after return
+;****************************************************************
+			PUSH	{R0-R6}
+
+			POP		{R0-R6}
+
+			BX		LR
+			ENDP	
+				
+				
+
+
+
+
+
+
+
+Init_UART0_Polling	PROC	{R0-R14}
+;****************************************************************
+;select/configure UART0 sources 
+;enable clocks for UART0 and Port B
+;set Port B mux pins to connect to UART0 
+;Configure UART0 (register initialization)
+;Input Parameter: none
+;Output Parameter: none
+;no registers but LR, PC, PSR changed after return
+;****************************************************************
+			PUSH	{R0-R2}
+			;code copied from provided PDF
+			;Select MCGFLLCLK as UART0 clock source
+			LDR 	R0,=SIM_SOPT2
+			LDR 	R1,=SIM_SOPT2_UART0SRC_MASK
+			LDR 	R2,[R0,#0]
+			BICS 	R2,R2,R1
+			LDR 	R1,=SIM_SOPT2_UART0SRC_MCGFLLCLK
+			ORRS 	R2,R2,R1
+			STR 	R2,[R0,#0]
+			;Set UART0 for external connection
+			LDR 	R0,=SIM_SOPT5
+			LDR 	R1,=SIM_SOPT5_UART0_EXTERN_MASK_CLEAR
+			LDR 	R2,[R0,#0]
+			BICS 	R2,R2,R1
+			STR 	R2,[R0,#0]
+			;Enable UART0 module clock
+			LDR 	R0,=SIM_SCGC4
+			LDR 	R1,=SIM_SCGC4_UART0_MASK
+			LDR 	R2,[R0,#0]
+			ORRS 	R2,R2,R1
+			STR 	R2,[R0,#0]
+			;Enable PORT B module clock
+			LDR 	R0,=SIM_SCGC5
+			LDR 	R1,=SIM_SCGC5_PORTB_MASK
+			LDR 	R2,[R0,#0]
+			ORRS 	R2,R2,R1
+			STR 	R2,[R0,#0]
+			;Select PORT B Pin 2 (D0) for UART0 RX (J8 Pin 01)
+			LDR 	R0,=PORTB_PCR2
+			LDR 	R1,=PORT_PCR_SET_PTB2_UART0_RX
+			STR 	R1,[R0,#0]
+			; Select PORT B Pin 1 (D1) for UART0 TX (J8 Pin 02)
+			LDR 	R0,=PORTB_PCR1
+			LDR 	R1,=PORT_PCR_SET_PTB1_UART0_TX
+			STR 	R1,[R0,#0]
+			;Disable UART0 receiver and transmitter
+			LDR 	R0,=UART0_BASE
+			MOVS	R1,#UART0_C2_T_R
+			LDRB 	R2,[R0,#UART0_C2_OFFSET]
+			BICS 	R2,R2,R1
+			STRB 	R2,[R0,#UART0_C2_OFFSET]
+			;Set UART0 for 9600 baud, 8N1 protocol
+			MOVS 	R1,#UART0_BDH_9600
+			STRB 	R1,[R0,#UART0_BDH_OFFSET]
+			MOVS	R1,#UART0_BDL_9600
+			STRB 	R1,[R0,#UART0_BDL_OFFSET]
+			MOVS 	R1,#UART0_C1_8N1
+			STRB 	R1,[R0,#UART0_C1_OFFSET]
+			MOVS 	R1,#UART0_C3_NO_TXINV
+			STRB 	R1,[R0,#UART0_C3_OFFSET]
+			MOVS 	R1,#UART0_C4_NO_MATCH_OSR_16
+			STRB 	R1,[R0,#UART0_C4_OFFSET]
+			MOVS 	R1,#UART0_C5_NO_DMA_SSR_SYNC
+			STRB 	R1,[R0,#UART0_C5_OFFSET]
+			MOVS 	R1,#UART0_S1_CLEAR_FLAGS
+			STRB 	R1,[R0,#UART0_S1_OFFSET]
+			MOVS 	R1, \
+					#UART0_S2_NO_RXINV_BRK10_NO_LBKDETECT_CLEAR_FLAGS
+			STRB 	R1,[R0,#UART0_S2_OFFSET]
+			;Enable UART0 receiver and transmitter
+			MOVS	R1,#UART0_C2_T_R
+			STRB 	R1,[R0,#UART0_C2_OFFSET]
+			;end code from PDF
+			POP		{R0-R2}
+			BX		LR
+			ENDP
+				
+				
+PutChar		PROC	{R0-R14}
+;****************************************************************
+;Polled Transmit 
+;Description from provided doc:
+;A polled transmit, (i.e., send character), polls UART0 status 
+;register 1 for the transmit data register empty (TDRE) condition 
+;in bit 7. If TDRE = 1, a byte may be transmitted (i.e., sent); 
+;otherwise, UART0 is not yet ready to transmit a byte, and the
+;status register must be polled until TDRE = 1.
+;Input Parameter: R0,  character to send to terminal (unsigned
+;byte ASCII code)
+;Output Parameter: none
+;no registers but LR, PC, PSR changed after return
+;****************************************************************
+;code from pdf
+;Poll TDRE until UART0 ready to transmit
+			PUSH	{R0-R3}
+			LDR 	R1,=UART0_BASE
+			MOVS 	R2,#UART0_S1_TDRE_MASK
+PollTx 		LDRB R3,[R1,#UART0_S1_OFFSET]
+			ANDS 	R3,R3,R2
+			BEQ 	PollTx
+;Transmit character stored in R0
+			STRB 	R0,[R1,#UART0_D_OFFSET]
+			POP		{R0-R3}
+			BX		LR
+			ENDP
+				
+				
+GetChar		PROC	{R1-R14}
+;****************************************************************
+;Polled Recieve 
+;Description from provided doc:
+;a polled receive, (i.e., get character), polls UART0 status 
+;register 1 for the receive data register full (RDRF) condition 
+;in bit 5. If RDRF = 1, a byte may be read by the KL05, 
+;(i.e., received); otherwise, UART0 has not yet received a 
+;byte, and the status register must be polled until RDRF = 1.
+;Input Parameter: none
+;Output Parameter: R0, character recieved from terminal unsigned
+;byte ASCII code)
+;no registers but R0, LR, PC, PSR changed after return
+;****************************************************************
+;code from doc provided
+			PUSH	{R1-R3}
+;Poll RDRF until UART0 ready to receive
+			LDR 	R1,=UART0_BASE
+			MOVS 	R2,#UART0_S1_RDRF_MASK
+PollRx 		LDRB R3,[R1,#UART0_S1_OFFSET]
+			ANDS 	R3,R3,R2
+			BEQ 	PollRx
+;Receive character and store in R0
+			LDRB 	R0,[R1,#UART0_D_OFFSET]
+			POP		{R1-R3}
+			BX		LR
+			ENDP
+				
+GetStringSB	PROC	{R1-R14}
+;****************************************************************
+;Inputs string from terminal reventing overrun 
+	;Preventing overrun of the buffer capacity specified in R1, this
+;subroutine inputs a string from the terminal keyboard to memory 
+;starting at the address in R0 and adds null termination. It ends 
+;terminal keyboard input when the user presses the enter key. 
+;For each of up to R1 - 1 characters typed on the terminal 
+;keyboard, it uses GetChar to input the character, uses PutChar 
+;to echo the character to the terminal screen, and stores the 
+;character at the next position in the string. For any character
+;typed after the first R1 - 1 characters, it uses GetChar to input 
+;the character, but it neither stores the character in the string 
+;nor echoes the character to the terminal screen.When the carriage 
+;return character has been received, it null terminates the string,
+;advances the cursor on the terminal screen to the beginning of 
+;the next line, and returns.
+;Input Parameter: R1, bytes in string buffer where R0 points
+;	(unsigned word value)
+;	R0, should be mem adress to start at. Not specified in doc
+;Output Parameter: R0, string buffer in memory for input from 
+;	user (unsigned word address)
+;no registers but PSR changed after return
+;Subroutines used:
+;	GetChar
+;	PutChar
+;****************************************************************
+			PUSH	{R0-R5}
+			MOVS	R0,R3		;copy address to store in to R3
+			SUBS	R4,R1,#1	;store R1-1 in R4
+			MOVS	R2,#0		;initialize r2 as 0 for num chars typed
+loopHere	
+			PUSH	{LR}
+			BL		GetChar		;Get char from terminal (now in R0)
+			POP		{PC}
+			MOVS	R5,R2		;r5 1 less then r2 for storage purposes
+			ADDS	R2,R2,#1	;increment r2
+			
+			CMP		R0,=CR		;compare the character typed to enter
+			BEQ		enterPressed;if equal branch accordingly
+			
+			CMP		R2,R4		;compare r1-1 with num chars typed so far
+			BGT		loopHere	;if r2 > r4 then no output or store
+			
+			;output and store 
+			PUSH	{LR}
+			BL		PutChar		;output char in r0 to terminal
+			POP		{PC}
+			STR		R0,[R3,R5]  ;store in addr r0 inc offset
+			B		loopHere
+			
+enterPressed	
+			PUSH	{LR}
+			BL		PutChar		;output carriage return to terminal
+			POP		{PC}
+			
+			MOVS	R0,=NULL	;move equate null into r0 
+			STR		R0,[R3,R5]  ;store null in addr r0 inc offset
+		
+			POP		{R0-R5}
+			BX		LR
+			ENDP				
+				
+PutStringSB	PROC	{R0-R14}
+;****************************************************************
+;Displays string from memory to terminal screen
+	;Preventing overrun of the buffer capacity specified in R1, 
+;this subroutine displays a null-terminated string to the terminal 
+;screen from memory starting at the address in R0. It uses PutChar 
+;to display characters from the string and leaves the terminal 
+;screen cursor positioned after the last character of the string.
+;Input Parameters: 
+;R0: string buffer in memory for output to simulated output stream 
+;	(unsigned word address)
+;R1: bytes in string buffer where R0 points (unsigned word value)
+;Output Parameter:
+;	none
+;no registers but PSR changed after return
+;Subroutines used:
+;	PutChar
+;****************************************************************
+			PUSH	{R0-R3}
+			MOVS	R0,R2		;copy starting address of string
+			MOVS	R3,#0		;initialize counter
+printLoop
+			LDR		R0,[R2,R3]	;configure input to PutChar	correctly with
+								;offset
+			PUSH	{LR}
+			BL		PutChar		;use putchar to output char R0 to terminal 		
+			POP		{PC}
+			ADDS	R3,R3,#1	;increment counter
+			CMP		R1,R3
+			BLE		printLoop	;if the counter is less than or equal to the 
+								;num bytes in the string branch and get next
+			POP		{R0-R3}		;otherwise restore registers and exit
+			BX		LR
+			ENDP			
+				
+PutNumU		PROC	{R0-R14}
+;****************************************************************
+	;Displays text decimal representation of value to terminal screen
+;This subroutine displays the text decimal representation to the
+;terminal screen of the unsigned word value in R0, using PutChar 
+;to output each decimal digit character. (For example, if R0 
+;contains 0x00000100, then 256 should be output 0000000256 would 
+;also be acceptable.) (hint use divU)
+;Input Parameters: 
+;R0: number for output to terminal(unsigned word value)
+;Output Parameter:
+;	none
+;no registers but PSR changed after return
+;Subroutines used:
+;****************************************************************
+			PUSH	{R0-R4}
+			MOVS	R0,R2		;backup word value in R2
+			MOVS 	R3,#10		;store 10 to be the denominator
+			MOVS	R4,#0		;store counter in R4
+convertLoop
+			MOVS    R3,R0		;move 10 to be the denominator
+			MOVS	R2,R1		;move word value to numerator
+			PUSH	{LR}
+			BL		DIVU		;use DIVU  		
+			POP		{PC}
+			PUSH	{R1}		;store the remainder in the stack
+			ADDS	R4,R4,#1	;increment counter
+			MOVS	R0,R1		;move the quotient so that it will be the 
+								;numerator next time around
+			
+			CMP		R0,#0		;check if quotient is 0, if so done
+			BNE		convertLoop	;if quotient not equal 0 go again
+			
+popLoop		
+			POP		{R0}		;pop individual result to the register r0
+			PUSH	{LR}
+			BL		PutChar		;use putchar to output to the terminal		
+			POP		{PC}
+			SUBS	R4,R4,#1	;decrement counter
+			CMP		R4,#0		;see if counter is back to 0
+			BGT		popLoop		;if counter still positive loop again		
+			POP		{R0-R4}		;restore registers
+			BX		LR			;branch back to where putNUmU was called
+			ENDP	
+				
+DIVU		PROC	{R2-R14}
+;>>>>>   end subroutine code <<<<<
+            ALIGN
+;****************************************************************
+;Vector Table Mapped to Address 0 at Reset
+;Linker requires __Vectors to be exported
+            AREA    RESET, DATA, READONLY
+            EXPORT  __Vectors
+            EXPORT  __Vectors_End
+            EXPORT  __Vectors_Size
+            IMPORT  __initial_sp
+            IMPORT  Dummy_Handler
+            IMPORT  HardFault_Handler
+__Vectors 
+                                      ;ARM core vectors
+            DCD    __initial_sp       ;00:end of stack
+            DCD    Reset_Handler      ;01:reset vector
+            DCD    Dummy_Handler      ;02:NMI
+            DCD    HardFault_Handler  ;03:hard fault
+            DCD    Dummy_Handler      ;04:(reserved)
+            DCD    Dummy_Handler      ;05:(reserved)
+            DCD    Dummy_Handler      ;06:(reserved)
+            DCD    Dummy_Handler      ;07:(reserved)
+            DCD    Dummy_Handler      ;08:(reserved)
+            DCD    Dummy_Handler      ;09:(reserved)
+            DCD    Dummy_Handler      ;10:(reserved)
+            DCD    Dummy_Handler      ;11:SVCall (supervisor call)
+            DCD    Dummy_Handler      ;12:(reserved)
+            DCD    Dummy_Handler      ;13:(reserved)
+            DCD    Dummy_Handler      ;14:PendSV (PendableSrvReq)
+                                      ;   pendable request 
+                                      ;   for system service)
+            DCD    Dummy_Handler      ;15:SysTick (system tick timer)
+            DCD    Dummy_Handler      ;16:DMA channel 0 transfer 
+                                      ;   complete/error
+            DCD    Dummy_Handler      ;17:DMA channel 1 transfer
+                                      ;   complete/error
+            DCD    Dummy_Handler      ;18:DMA channel 2 transfer
+                                      ;   complete/error
+            DCD    Dummy_Handler      ;19:DMA channel 3 transfer
+                                      ;   complete/error
+            DCD    Dummy_Handler      ;20:(reserved)
+            DCD    Dummy_Handler      ;21:FTFA command complete/
+                                      ;   read collision
+            DCD    Dummy_Handler      ;22:low-voltage detect;
+                                      ;   low-voltage warning
+            DCD    Dummy_Handler      ;23:low leakage wakeup
+            DCD    Dummy_Handler      ;24:I2C0
+            DCD    Dummy_Handler      ;25:(reserved)
+            DCD    Dummy_Handler      ;26:SPI0
+            DCD    Dummy_Handler      ;27:(reserved)
+            DCD    Dummy_Handler      ;28:UART0 (status; error)
+            DCD    Dummy_Handler      ;29:(reserved)
+            DCD    Dummy_Handler      ;30:(reserved)
+            DCD    Dummy_Handler      ;31:ADC0
+            DCD    Dummy_Handler      ;32:CMP0
+            DCD    Dummy_Handler      ;33:TPM0
+            DCD    Dummy_Handler      ;34:TPM1
+            DCD    Dummy_Handler      ;35:(reserved)
+            DCD    Dummy_Handler      ;36:RTC (alarm)
+            DCD    Dummy_Handler      ;37:RTC (seconds)
+            DCD    Dummy_Handler      ;38:PIT
+            DCD    Dummy_Handler      ;39:(reserved)
+            DCD    Dummy_Handler      ;40:(reserved)
+            DCD    Dummy_Handler      ;41:DAC0
+            DCD    Dummy_Handler      ;42:TSI0
+            DCD    Dummy_Handler      ;43:MCG
+            DCD    Dummy_Handler      ;44:LPTMR0
+            DCD    Dummy_Handler      ;45:(reserved)
+            DCD    Dummy_Handler      ;46:PORTA
+            DCD    Dummy_Handler      ;47:PORTB
+__Vectors_End
+__Vectors_Size  EQU     __Vectors_End - __Vectors
+            ALIGN
+;****************************************************************
+;Constants
+            AREA    MyConst,DATA,READONLY
+;>>>>> begin constants here <<<<<
+;>>>>>   end constants here <<<<<
+            ALIGN
+;****************************************************************
+;Variables
+            AREA    MyData,DATA,READWRITE
+;>>>>> begin variables here <<<<<
+;>>>>>   end variables here <<<<<
+            ALIGN
+            END
