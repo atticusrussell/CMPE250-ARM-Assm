@@ -45,6 +45,10 @@
 /Listings/*
 /Objects/*
 
+# stop tracking generated output dirs
+**/Listings
+**/Objects
+
 # Debugger files
 # define exception below if needed
 *.ini
