@@ -1,0 +1,6 @@
+Dependencies for Project 'Exercise07', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
+F (.\Exercise07.s)(0x60662347)(--cpu Cortex-M0+ --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Users\Atticus\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 531" --pd "MKL05Z32xxx4 SETA 1"--list .\listings\exercise07.lst --length 49 --width 120 -o .\objects\exercise07.o --depend .\objects\exercise07.d)
+I (MKL05Z4.s)(0x6037D15C)
+F (.\Start.s)(0x6037D171)(--cpu Cortex-M0+ --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Users\Atticus\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 531" --pd "MKL05Z32xxx4 SETA 1"--list .\listings\start.lst --length 49 --width 120 -o .\objects\start.o --depend .\objects\start.d)
+I (MKL05Z4.s)(0x6037D15C)

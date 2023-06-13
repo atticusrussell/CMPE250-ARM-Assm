@@ -1,0 +1,110 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<title>Static Call Graph - [.\Objects\Exercise06.axf]</title></head>
+<body><HR>
+<H1>Static Call Graph for image .\Objects\Exercise06.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Mar 18 13:28:26 2021
+<BR><P>
+<H3>Maximum Stack Usage =          0 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+Call chain for Maximum Stack Depth:</H3>
+
+<P>
+<H3>
+Mutually Recursive functions
+</H3> <LI><a href="#[1]">Dummy_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1]">Dummy_Handler</a><BR>
+</UL>
+<P>
+<H3>
+Function Pointers
+</H3><UL>
+ <LI><a href="#[1]">Dummy_Handler</a> from start.o(Start) referenced 45 times from exercise06.o(RESET)
+ <LI><a href="#[2]">HardFault_Handler</a> from start.o(Start) referenced from exercise06.o(RESET)
+ <LI><a href="#[3]">Reset_Handler</a> from exercise06.o(MyCode) referenced from exercise06.o(RESET)
+</UL>
+<P>
+<H3>
+Global Symbols
+</H3>
+<P><STRONG><a name="[e]"></a>LengthStringSB</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, exercise06_lib.o(Exercise06_Lib), UNUSED)
+
+<P><STRONG><a name="[3]"></a>Reset_Handler</STRONG> (Thumb, 180 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Calls]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Startup
+<LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+<LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutStringSB
+<LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
+<LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetChar
+<LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_UART0_Polling
+</UL>
+
+<P><STRONG><a name="[a]"></a>PutChar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+<LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+<LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutStringSB
+<LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
+</UL>
+
+<P><STRONG><a name="[b]"></a>Startup</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, start.o(Start))
+<BR><BR>[Calls]<UL><LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetClock48MHz
+<LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+</UL>
+
+<P><STRONG><a name="[1]"></a>Dummy_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, start.o(Start))
+<BR><BR>[Calls]<UL><LI><a href="#[1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> exercise06.o(RESET)
+</UL>
+<P><STRONG><a name="[2]"></a>HardFault_Handler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, start.o(Start))
+<BR>[Address Reference Count : 1]<UL><LI> exercise06.o(RESET)
+</UL><P>
+<H3>
+Local Symbols
+</H3>
+<P><STRONG><a name="[4]"></a>Init_UART0_Polling</STRONG> (Thumb, 108 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+</UL>
+
+<P><STRONG><a name="[5]"></a>GetChar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+<LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
+</UL>
+
+<P><STRONG><a name="[6]"></a>GetStringSB</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Calls]<UL><LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetChar
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+</UL>
+
+<P><STRONG><a name="[7]"></a>PutStringSB</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Calls]<UL><LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+</UL>
+
+<P><STRONG><a name="[8]"></a>PutNumU</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Calls]<UL><LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DIVU
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
+</UL>
+
+<P><STRONG><a name="[9]"></a>DIVU</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, exercise06.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+</UL>
+
+<P><STRONG><a name="[c]"></a>SystemInit</STRONG> (Thumb, 54 bytes, Stack size 0 bytes, start.o(Start))
+<BR><BR>[Called By]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Startup
+</UL>
+
+<P><STRONG><a name="[d]"></a>SetClock48MHz</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, start.o(Start))
+<BR><BR>[Called By]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Startup
+</UL>
+<P>
+<H3>
+Undefined Global Symbols
+</H3><HR></body></html>
