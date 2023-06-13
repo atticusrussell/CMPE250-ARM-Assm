@@ -74,6 +74,9 @@
 # stop tracking event recorder stubs
 **/EventRecorderStub.scvd
 
+# stop tracking generated weird duplicates like .startup_MKL05Z4.s@1.0.0
+**/.*@*
+
 # Miscellaneous
 *.tra
 *.bin
