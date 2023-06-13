@@ -71,6 +71,9 @@
 *.sfd
 *.sfr
 
+# stop tracking event recorder stubs
+**/EventRecorderStub.scvd
+
 # Miscellaneous
 *.tra
 *.bin
