@@ -1,4 +1,0 @@
-Dependencies for Project 'Exercise04', Target 'Target 1': (DO NOT MODIFY !)
-CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
-F (.\Exercise04.s)(0x6036A97B)(--cpu Cortex-M0+ --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Users\Atticus\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 531" --pd "MKL05Z32xxx4 SETA 1"--list .\listings\exercise04.lst --xref --length 49 --width 120 -o .\objects\exercise04.o --depend .\objects\exercise04.d)
-F (.\Exercise04_Lib.lib)(0x6022D1B8)()
