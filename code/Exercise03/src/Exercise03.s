@@ -1,7 +1,10 @@
-            TTL CMPE 250 Exercise 3
+            TTL CMPE 250 Exercise 3 
+			SUBT Memory, Conditional Branching, and Debugging Tools
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;This program demonstrates memory use and conditional branching
+;by calculating the result of three arithmetic expressions using
+;two sets of input values.
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <2/11/2021>
 ;Class:  CMPE-250

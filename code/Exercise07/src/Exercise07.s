@@ -1,7 +1,9 @@
-            TTL Lab Exercise Seven Circular FIFO Queue operations
+            TTL CMPE 250 Exercise 7 
+			SUBT Circular FIFO Queue operations
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;Program tests subroutines written to enqueue a character to a 
+;queue and to dequeue a character from a queue on the KL05Z.
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <3/11/2021> <3/31/2021>
 ;Class:  CMPE-250
@@ -452,7 +454,7 @@ JustSetC	PROC	{R0-R14}
 Dequeue		PROC	{R2-R14}
 ;****************************************************************
 ;Description:
-;	Attempts to get a character from the queue whose record structure’s
+;	Attempts to get a character from the queue whose record structureï¿½s
 ;	address is in R1: if the queue is not empty, dequeues a single character
 ;	from the queue to R0, and returns with the PSR C bit cleared, (i.e., 0),
 ;	to report dequeue success, otherwise, returns with the PSR C bit set, 
@@ -506,7 +508,7 @@ endDequeueHere
 Enqueue		PROC	{R2-R14}
 ;****************************************************************
 ;Description:
-;	Attempts to put a character in the queue whose queue record structure’s
+;	Attempts to put a character in the queue whose queue record structureï¿½s
 ;	address is in R1: if the queue is not full, enqueues the single character 
 ;	from R0 to the queue, and returns with the PSR C bit cleared to report 
 ;	enqueue success, otherwise, returns with the PSR C bit set to report 
@@ -588,7 +590,7 @@ PutNumHex	PROC	{R0-R14}
 ;	Prints to the terminal screen the text hexadecimal representation of the
 ;	unsigned word value in R0. (For example, if R0 contains 0x000012FF, then 
 ;	000012FF should print on the terminal. Note: 12FF would not be acceptable. 
-;	Do not use division to determine the hexadecimal digit values—use bit masks 
+;	Do not use division to determine the hexadecimal digit valuesï¿½use bit masks 
 ;	and shifts.)
 ;Input Parameter: 
 ;	R0: number to print in hexadecimal (unsigned word value)

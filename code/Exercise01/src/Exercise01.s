@@ -1,7 +1,9 @@
-            TTL CMPE 250 Exercise ______
+            TTL CMPE 250 Exercise One 
+            SUBT ROM to RAM Demonstration
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;This program loads four constants from ROM
+;and stores them in variables in RAM.
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <1/28/2021>
 ;Class:  CMPE-250

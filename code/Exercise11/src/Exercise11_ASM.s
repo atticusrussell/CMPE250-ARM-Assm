@@ -1,6 +1,9 @@
-            TTL Program Title for Listing Header Goes Here
+            TTL CMPE 250 Exercise 11
+			SUBT PWM and LEDs with Mixed Assembly Language and C
 ;****************************************************************
-;Lab Ex. 11: PWM and LEDs with Mixed Assembly Language and C
+;A PWM waveform from the KL05 is used to control the brightness 
+; of the red LED on the KL05Z board. 
+;----------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <April 26,2021>
 ;Class:  CMPE-250

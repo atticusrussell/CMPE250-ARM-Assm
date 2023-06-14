@@ -1,6 +1,9 @@
-            TTL CMPE 250 Exercise 6
+            TTL CMPE 250 Exercise 6 
+			SUBT Secure String I/O and Number Output
 ;****************************************************************
-;Polled Serial I/O
+;Program tests secure subroutines written for serial I/O of 
+;strings that prevents buffer overrun on the KL05Z.
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <3/04/2021>
 ;Class:  CMPE-250
