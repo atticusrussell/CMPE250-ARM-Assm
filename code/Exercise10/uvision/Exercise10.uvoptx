@@ -10,7 +10,7 @@
     <aExt>*.s*; *.src; *.a*</aExt>
     <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
-    <tExt>*.txt; *.h; *.inc</tExt>
+    <tExt>*.txt; *.h; *.inc; *.md</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
     <nMigrate>0</nMigrate>
@@ -161,7 +161,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\Exercise10.s</Filename>
+          <Filename>C:\Users\attic\Documents\GitHub\CMPE250-ARM-Assm\code\Exercise10\uvision\Exercise10.s</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\Exercise10\Exercise10.s\141</Expression>
         </Bp>
@@ -221,10 +221,10 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
       <FileType>2</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Exercise10.s</PathWithFileName>
+      <PathWithFileName>..\src\Exercise10.s</PathWithFileName>
       <FilenameWithoutPath>Exercise10.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -236,7 +236,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Start.s</PathWithFileName>
+      <PathWithFileName>..\src\Start.s</PathWithFileName>
       <FilenameWithoutPath>Start.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

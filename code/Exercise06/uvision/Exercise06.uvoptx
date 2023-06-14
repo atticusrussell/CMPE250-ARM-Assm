@@ -10,7 +10,7 @@
     <aExt>*.s*; *.src; *.a*</aExt>
     <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
-    <tExt>*.txt; *.h; *.inc</tExt>
+    <tExt>*.txt; *.h; *.inc; *.md</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
     <nMigrate>0</nMigrate>
@@ -212,35 +212,35 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
       <FileType>2</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Exercise06.s</PathWithFileName>
-      <FilenameWithoutPath>Exercise06.s</FilenameWithoutPath>
+      <PathWithFileName>..\src\Start.s</PathWithFileName>
+      <FilenameWithoutPath>Start.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>2</FileNumber>
-      <FileType>4</FileType>
+      <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Exercise06_Lib\Exercise06_Lib.lib</PathWithFileName>
-      <FilenameWithoutPath>Exercise06_Lib.lib</FilenameWithoutPath>
+      <PathWithFileName>..\src\Exercise06.s</PathWithFileName>
+      <FilenameWithoutPath>Exercise06.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>3</FileNumber>
-      <FileType>2</FileType>
-      <tvExp>1</tvExp>
+      <FileType>4</FileType>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Start.s</PathWithFileName>
-      <FilenameWithoutPath>Start.s</FilenameWithoutPath>
+      <PathWithFileName>..\lib\Exercise06_Lib.lib</PathWithFileName>
+      <FilenameWithoutPath>Exercise06_Lib.lib</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

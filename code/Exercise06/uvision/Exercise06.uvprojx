@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>MKL05Z32xxx4</Device>
           <Vendor>NXP</Vendor>
-          <PackID>Keil.Kinetis_KLxx_DFP.1.14.0</PackID>
+          <PackID>Keil.Kinetis_KLxx_DFP.1.15.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x1FFFFC00,0x00001000) IROM(0x00000000,0x00008000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -186,6 +186,7 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -384,19 +385,19 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
+              <FileName>Start.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\src\Start.s</FilePath>
+            </File>
+            <File>
               <FileName>Exercise06.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\Exercise06.s</FilePath>
+              <FilePath>..\src\Exercise06.s</FilePath>
             </File>
             <File>
               <FileName>Exercise06_Lib.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>.\Exercise06_Lib\Exercise06_Lib.lib</FilePath>
-            </File>
-            <File>
-              <FileName>Start.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Start.s</FilePath>
+              <FilePath>..\lib\Exercise06_Lib.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -414,11 +415,6 @@
     <Layers>
       <Layer>
         <LayName>&lt;Project Info&gt;</LayName>
-        <LayDesc></LayDesc>
-        <LayUrl></LayUrl>
-        <LayKeys></LayKeys>
-        <LayCat></LayCat>
-        <LayLic></LayLic>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
