@@ -1,7 +1,11 @@
-			TTL Lab Exercise Ten: Timer Driver Input Timing
+			TTL Lab Exercise Ten
+			SUBT Timer Driver Input Timing
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;Implements a timer driver for the KL05Z board. It uses the KL05 
+; periodic interrupt timer (PIT) with channel zero. 
+;Timing measurements accurate to within 0.01 s, (10 ms). 
+; Uses interrupt service routine (ISR) and driver program
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <4/8/2021>
 ;Class:  CMPE-250
@@ -156,11 +160,11 @@ PIT_ISR	PROC	{R0-R14}
 ;otherwise it leaves Count unchanged. In either case, make sure the ISR clears 
 ;the interrupt condition before exiting. You must write the ISR so that no 
 ;registers have changed value after return. 
-;(Note: the Cortex-M0+ automatically preserves R0–R3, 
+;(Note: the Cortex-M0+ automatically preserves R0ï¿½R3, 
 ;R12, LR, PC, and PSR for ISRs.)
 ;****************************************************************
 			CPSID	I 	;Mask interrupts
-						;push any registers used except R0–R3, R12
+						;push any registers used except R0ï¿½R3, R12
 ;							if (RunStopWatch) {
 			LDR		R0,=RunStopWatch	;load addr into r0
 			LDRB	R0,[R0,#0]			;load value RSW
@@ -256,12 +260,12 @@ UART0_ISR	PROC	{R0-R14}
 ;****************************************************************
 ;ISR that handles UART0 transmit and recieve interrupts. You 
 ;must write the ISR so that no registers have changed value after 
-;return. (Note: the Cortex-M0+ automatically preserves R0–R3, 
+;return. (Note: the Cortex-M0+ automatically preserves R0ï¿½R3, 
 ;R12, LR, PC, and PSR for ISRs.)
 ;****************************************************************
 			CPSID	I 	;Mask interrupts
 			PUSH	{LR} 
-						;push any registers used except R0–R3, R12
+						;push any registers used except R0ï¿½R3, R12
 						;interrupt source can be found in UART0_S1
 			LDR 	R3,=UART0_BASE
 			MOVS	R1,#UART0_C2_TIE_MASK
@@ -548,7 +552,7 @@ JustSetC	PROC	{R0-R14}
 Dequeue		PROC	{R2-R14}
 ;****************************************************************
 ;Description:
-;	Attempts to get a character from the queue whose record structure’s
+;	Attempts to get a character from the queue whose record structureï¿½s
 ;	address is in R1: if the queue is not empty, dequeues a single character
 ;	from the queue to R0, and returns with the PSR C bit cleared, (i.e., 0),
 ;	to report dequeue success, otherwise, returns with the PSR C bit set, 
@@ -602,7 +606,7 @@ endDequeueHere
 Enqueue		PROC	{R2-R14}
 ;****************************************************************
 ;Description:
-;	Attempts to put a character in the queue whose queue record structure’s
+;	Attempts to put a character in the queue whose queue record structureï¿½s
 ;	address is in R1: if the queue is not full, enqueues the single character 
 ;	from R0 to the queue, and returns with the PSR C bit cleared to report 
 ;	enqueue success, otherwise, returns with the PSR C bit set to report 
@@ -684,7 +688,7 @@ PutNumHex	PROC	{R0-R14}
 ;	Prints to the terminal screen the text hexadecimal representation of the
 ;	unsigned word value in R0. (For example, if R0 contains 0x000012FF, then 
 ;	000012FF should print on the terminal. Note: 12FF would not be acceptable. 
-;	Do not use division to determine the hexadecimal digit values—use bit masks 
+;	Do not use division to determine the hexadecimal digit valuesï¿½use bit masks 
 ;	and shifts.)
 ;Input Parameter: 
 ;	R0: number to print in hexadecimal (unsigned word value)

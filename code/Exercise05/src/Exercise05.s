@@ -1,6 +1,9 @@
-            TTL CMPE 250 Exercise 5
+            TTL CMPE 250 Exercise 5 
+			SUBT Polled Serial I/O
 ;****************************************************************
-;Polled Serial I/O
+;Implements and tests basic subroutines for polled serial I/O
+;of characters on the KL05 UART0 to and from the terminal.
+;----------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <2/25/2021>
 ;Class:  CMPE-250

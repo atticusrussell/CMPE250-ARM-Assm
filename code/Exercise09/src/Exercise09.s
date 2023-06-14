@@ -1,7 +1,13 @@
-            TTL Lab Exercise Nine Serial I/O Driver
+            TTL Lab Exercise Nine 
+			SUBT Serial I/O Driver
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;Implements interrupt-based serial communication with the KL05 
+; UART using circular FIFO queues for receiving and transmitting
+; serial data. An interrupt service routine (ISR) and serial 
+; character I/O driver are written and integrated with the 
+; circular FIFO queue operations test program from Lab Exercise 
+; Seven, and they are run on the KL05Z board. 
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <4/1/2021>
 ;Class:  CMPE-250

@@ -1,7 +1,9 @@
-            TTL Lab Exercise Eight Multiprecision Arithmetic
+            TTL CMPE 250 Exercise 8 
+			SUBT Multiprecision Arithmetic
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;Implements and tests subroutines to perform multi-word
+;number I/O and addition on the KL05Z board.
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <3/18/2021>
 ;Class:  CMPE-250
@@ -554,7 +556,7 @@ PutNumHex	PROC	{R0-R14}
 ;	Prints to the terminal screen the text hexadecimal representation of the
 ;	unsigned word value in R0. (For example, if R0 contains 0x000012FF, then 
 ;	000012FF should print on the terminal. Note: 12FF would not be acceptable. 
-;	Do not use division to determine the hexadecimal digit values—use bit masks 
+;	Do not use division to determine the hexadecimal digit valuesï¿½use bit masks 
 ;	and shifts.)
 ;Input Parameter: 
 ;	R0: number to print in hexadecimal (unsigned word value)

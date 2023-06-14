@@ -1,7 +1,10 @@
-            TTL CMPE 250 Exercise Two
+            TTL CMPE 250 Exercise 2 
+            SUBT Basic Arithmetic Operations
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;This program demonstrates arithmetic operations in ARM 
+;Cortex-M0+ assembly language. The program computes 
+;45 + 6 + ([-13] / 4) - (7 x 3) - 65 + 33
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <2/4/2021>
 ;Class:  CMPE-250

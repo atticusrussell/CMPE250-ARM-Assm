@@ -1,7 +1,9 @@
-            TTL CMPE 250 Exercise 4
+            TTL CMPE 250 Exercise 4 
+			SUBT Iteration and Subroutines
 ;****************************************************************
-;Descriptive comment header goes here.
-;(What does the program do?)
+;This program demonstrates iteration and subroutines through
+;the use of a division subroutine.
+;---------------------------------------------------------------
 ;Name:  <Atticus Russell>
 ;Date:  <2/18/2021>
 ;Class:  CMPE-250
